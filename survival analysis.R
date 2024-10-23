@@ -97,4 +97,48 @@ ranger_model <- ranger(Surv(time, event) ~.,
 #Plot the death times
 plot(ranger_model$unique.death.times,ranger_model$survival[1,], type = "l", ylim = c(0,1),)
 
+x<-4
+t1=Sys.time()
+sqrt(x)
+(Sys.time()-t1)*1e3
+t1=Sys.time()
+x^.5
+(Sys.time()-t1)*1e3
+t1=Sys.time()
+exp(log(x)/2)
+(Sys.time()-t1)*1e3
+
+
+bench::mark(
+  sqrt(x),
+  x^.5,
+  exp(log(x)/2)
+)
+
+
+set.seed(123)  # Set seed for reproducibility
+
+# Step 1: Generate a vector of random numbers
+random_numbers <- runif(20, min = 1, max = 100)  # 20 random numbers between 1 and 100
+
+# Step 2: Randomly assign NA values
+na_positions <- sample(1:20, size = 5)  # Randomly select 5 positions for NA
+random_numbers[na_positions] <- NA
+
+# View the result
+
+int<-function(x1,x2,reps){
+  hits<-0
+  for(i in 1:reps) {
+    u1<- runif(1, min = 0, max = 1)
+    u2<- runif(1, min = 0, max = 1)
+    if (u1^2>u2) {hits=hits+1}
+  }
+  return(hits/reps)
+}
+
+int(0,1,1000000)
+
+
+
 
